@@ -7,4 +7,19 @@
 
 body {
   background-color: black;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+button, a {
+  touch-action: manipulation;
 }

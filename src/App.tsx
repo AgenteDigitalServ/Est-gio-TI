@@ -20,21 +20,6 @@ export default function App() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
 
-  // Simulation of "new job" arrival
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if ((window as any).showTechStepsNotification) {
-        (window as any).showTechStepsNotification(
-          'Nova Vaga!',
-          'Uma nova vaga de Backend em Manaus acaba de ser postada.',
-          'info',
-          'https://www.prodam.am.gov.br/' // Direct link for the simulation
-        );
-      }
-    }, 15000); // Simulate a new job after 15 seconds
-    return () => clearTimeout(timer);
-  }, []);
-
   // Reset pagination when filters change
   useEffect(() => {
     setVisibleCount(JOBS_PER_PAGE);
