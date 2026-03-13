@@ -7,6 +7,7 @@ interface Notification {
   title: string;
   message: string;
   type: 'success' | 'info' | 'warning';
+  url?: string;
 }
 
 export const NotificationManager: React.FC = () => {
@@ -33,12 +34,12 @@ export const NotificationManager: React.FC = () => {
     }
   };
 
-  const addToast = (title: string, message: string, type: 'success' | 'info' | 'warning' = 'info') => {
+  const addToast = (title: string, message: string, type: 'success' | 'info' | 'warning' = 'info', url?: string) => {
     const id = Math.random().toString(36).substring(2, 9);
-    setToasts((prev) => [...prev, { id, title, message, type }]);
+    setToasts((prev) => [...prev, { id, title, message, type, url }]);
     setTimeout(() => {
       removeToast(id);
-    }, 5000);
+    }, 8000); // Increased time for user to click
   };
 
   const removeToast = (id: string) => {
@@ -91,6 +92,16 @@ export const NotificationManager: React.FC = () => {
               <div className="flex-grow">
                 <h4 className="text-zinc-100 font-bold text-sm">{toast.title}</h4>
                 <p className="text-zinc-500 text-xs mt-1">{toast.message}</p>
+                {toast.url && (
+                  <a
+                    href={toast.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-2 text-emerald-500 text-xs font-bold hover:text-emerald-400 transition-colors underline underline-offset-2"
+                  >
+                    Ver Vaga →
+                  </a>
+                )}
               </div>
               <button
                 onClick={() => removeToast(toast.id)}

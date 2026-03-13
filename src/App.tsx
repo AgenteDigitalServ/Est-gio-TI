@@ -27,7 +27,8 @@ export default function App() {
         (window as any).showTechStepsNotification(
           'Nova Vaga!',
           'Uma nova vaga de Backend em Manaus acaba de ser postada.',
-          'info'
+          'info',
+          'https://www.prodam.am.gov.br/' // Direct link for the simulation
         );
       }
     }, 15000); // Simulate a new job after 15 seconds
