@@ -15,7 +15,7 @@ export default function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedLocation, setSelectedLocation] = useState('Manaus, AM');
-  const [newsCategory, setNewsCategory] = useState<'All' | 'Manaus' | 'Brasil'>('All');
+  const [newsCategory, setNewsCategory] = useState<'All' | 'Manaus' | 'Brasil' | 'International'>('All');
   const [visibleCount, setVisibleCount] = useState(JOBS_PER_PAGE);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
@@ -42,7 +42,16 @@ export default function App() {
 
   const locations = useMemo(() => {
     const locs = MOCK_JOBS.map(job => job.location);
-    return ['All', ...new Set(locs)];
+    const uniqueLocs = Array.from(new Set(locs)).sort((a, b) => {
+      if (a.includes('Remoto')) return -1;
+      if (b.includes('Remoto')) return 1;
+      if (a.includes('Manaus')) return -1;
+      if (b.includes('Manaus')) return 1;
+      if (a.includes('USA') || a.includes('Europe')) return -1;
+      if (b.includes('USA') || b.includes('Europe')) return 1;
+      return a.localeCompare(b);
+    });
+    return ['All', ...uniqueLocs];
   }, []);
 
   const filteredJobs = useMemo(() => {
@@ -150,34 +159,89 @@ export default function App() {
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-6"
           >
             <Sparkles size={14} />
-            {activeTab === 'jobs' ? 'Ecossistema Tech Manaus' : 'Radar de Notícias Tech'}
+            {activeTab === 'jobs' ? 'Ecossistema Estágio TI' : 'Radar de Notícias Tech'}
           </motion.div>
           <h2 className="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-tight">
             {activeTab === 'jobs' ? (
-              <>Dê o próximo passo na sua <br className="hidden md:block" /> carreira em <span className="text-emerald-500 italic">Manaus.</span></>
+              null
             ) : (
               <>Fique por dentro do que <br className="hidden md:block" /> acontece no <span className="text-emerald-500 italic">Mundo Tech.</span></>
             )}
           </h2>
           
           {activeTab === 'jobs' && (
-            <div className="flex justify-center mb-8">
-              <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 flex items-center gap-4 backdrop-blur-sm" id="stats-card">
+            <div className="flex flex-wrap justify-center gap-4 mb-8" id="stats-container">
+              {/* Total Card */}
+              <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 flex items-center gap-4 backdrop-blur-sm min-w-[200px]">
                 <div className="p-3 bg-emerald-500/20 rounded-xl">
                   <Briefcase className="text-emerald-500" size={24} />
                 </div>
                 <div className="text-left">
-                  <p className="text-zinc-500 text-xs uppercase font-bold tracking-wider">Vagas em Manaus</p>
-                  <p className="text-2xl font-black text-emerald-500">{filteredJobs.length}</p>
+                  <p className="text-zinc-500 text-[10px] uppercase font-bold tracking-wider">Total de Vagas</p>
+                  <p className="text-2xl font-black text-emerald-500">
+                    {MOCK_JOBS.length}
+                  </p>
+                </div>
+              </div>
+
+              {/* Manaus Card */}
+              <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 flex items-center gap-4 backdrop-blur-sm min-w-[200px]">
+                <div className="p-3 bg-emerald-500/20 rounded-xl">
+                  <MapPin className="text-emerald-500" size={24} />
+                </div>
+                <div className="text-left">
+                  <p className="text-zinc-500 text-[10px] uppercase font-bold tracking-wider">Manaus (Local)</p>
+                  <p className="text-2xl font-black text-emerald-500">
+                    {MOCK_JOBS.filter(j => j.location.toLowerCase().includes('manaus') && !j.isRemote).length}
+                  </p>
+                </div>
+              </div>
+
+              {/* Brasil Card */}
+              <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 flex items-center gap-4 backdrop-blur-sm min-w-[200px]">
+                <div className="p-3 bg-orange-500/20 rounded-xl">
+                  <Globe className="text-orange-400" size={24} />
+                </div>
+                <div className="text-left">
+                  <p className="text-zinc-500 text-[10px] uppercase font-bold tracking-wider">Brasil (Fora AM)</p>
+                  <p className="text-2xl font-black text-orange-400">
+                    {MOCK_JOBS.filter(j => !j.location.toLowerCase().includes('manaus') && !j.isRemote && !j.id.startsWith('int')).length}
+                  </p>
+                </div>
+              </div>
+
+              {/* Remote Card */}
+              <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 flex items-center gap-4 backdrop-blur-sm min-w-[200px]">
+                <div className="p-3 bg-blue-500/20 rounded-xl">
+                  <Briefcase className="text-blue-400" size={24} />
+                </div>
+                <div className="text-left">
+                  <p className="text-zinc-500 text-[10px] uppercase font-bold tracking-wider">Remoto (Brasil)</p>
+                  <p className="text-2xl font-black text-blue-400">
+                    {MOCK_JOBS.filter(j => j.isRemote && !j.id.startsWith('int')).length}
+                  </p>
+                </div>
+              </div>
+
+              {/* International Card */}
+              <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 flex items-center gap-4 backdrop-blur-sm min-w-[200px]">
+                <div className="p-3 bg-purple-500/20 rounded-xl">
+                  <Sparkles className="text-purple-400" size={24} />
+                </div>
+                <div className="text-left">
+                  <p className="text-zinc-500 text-[10px] uppercase font-bold tracking-wider">Exterior (Remoto)</p>
+                  <p className="text-2xl font-black text-purple-400">
+                    {MOCK_JOBS.filter(j => j.id.startsWith('int')).length}
+                  </p>
                 </div>
               </div>
             </div>
           )}
           
-          <p className="text-zinc-500 text-lg md:text-xl max-w-2xl mx-auto">
+          <p className="text-zinc-500 text-lg md:text-xl max-w-3xl mx-auto">
             {activeTab === 'jobs' 
-              ? 'Refinando buscas em CIEE, IEL, Startups e Órgãos Públicos (Municipais, Estaduais e Federais).'
-              : 'As principais notícias de tecnologia e carreira de Manaus e de todo o Brasil em um só lugar.'}
+              ? 'Refinando buscas em CIEE, IEL, Startups, Órgãos Públicos e Agências Internacionais (Parker Dewey, Erasmus+, LinkedIn Global).'
+              : 'As principais notícias de tecnologia e carreira de Manaus, Brasil e Exterior em um só lugar.'}
           </p>
         </section>
 
@@ -201,7 +265,7 @@ export default function App() {
                     onChange={(e) => setSelectedLocation(e.target.value)}
                     className="appearance-none w-full md:w-64 bg-zinc-900 border border-zinc-800 text-zinc-100 rounded-2xl py-3 pl-12 pr-10 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all cursor-pointer"
                   >
-                    <option value="All">Todas as Localizações</option>
+                    <option value="All">Todas (Incluindo Remoto)</option>
                     {locations.filter(l => l !== 'All').map(loc => (
                       <option key={loc} value={loc}>{loc}</option>
                     ))}
@@ -229,7 +293,7 @@ export default function App() {
               </>
             ) : (
               <div className="flex flex-wrap justify-center gap-2">
-                {['All', 'Manaus', 'Brasil'].map((cat) => (
+                {['All', 'Manaus', 'Brasil', 'International'].map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setNewsCategory(cat as any)}

@@ -8,8 +8,10 @@ export interface Job {
   description: string;
   postedAt: string;
   url: string;
-  source?: 'CIEE' | 'IEL' | 'Startup' | 'Direct';
+  source?: 'CIEE' | 'IEL' | 'Startup' | 'Direct' | 'Erasmus+' | 'Parker Dewey' | 'LinkedIn' | 'Indeed';
   code?: string;
+  contactEmail?: string;
+  isRemote?: boolean;
 }
 
 export interface News {
@@ -18,11 +20,63 @@ export interface News {
   source: string;
   url: string;
   publishedAt: string;
-  category: 'Manaus' | 'Brasil';
+  category: 'Manaus' | 'Brasil' | 'International';
   summary: string;
 }
 
 export const MOCK_JOBS: Job[] = [
+  {
+    id: 'int1',
+    title: 'Software Engineering Intern (Remote)',
+    company: 'Tech Giant USA',
+    technologies: ['Python', 'Go', 'Kubernetes'],
+    location: 'Remote (USA)',
+    category: 'Backend',
+    description: 'Join a world-class engineering team in the USA. Remote opportunity for international students.',
+    postedAt: '2026-03-12',
+    url: 'https://www.linkedin.com/jobs/search/?keywords=Software+Engineering+Intern+Remote+USA',
+    source: 'LinkedIn',
+    isRemote: true,
+  },
+  {
+    id: 'int2',
+    title: 'Micro-Internship: Web Development',
+    company: 'Parker Dewey Projects',
+    technologies: ['HTML', 'CSS', 'JavaScript'],
+    location: 'Remote (USA)',
+    category: 'Frontend',
+    description: 'Short-term, paid professional assignments in the USA. Great for building your portfolio.',
+    postedAt: '2026-03-11',
+    url: 'https://www.parkerdewey.com/',
+    source: 'Parker Dewey',
+    isRemote: true,
+  },
+  {
+    id: 'int3',
+    title: 'Fullstack Developer Intern (Erasmus+)',
+    company: 'EuroTech Solutions',
+    technologies: ['Vue.js', 'PHP', 'MySQL'],
+    location: 'Remote (Europe)',
+    category: 'Fullstack',
+    description: 'Internship opportunity through the Erasmus+ program. Work with a European startup remotely.',
+    postedAt: '2026-03-10',
+    url: 'https://erasmusintern.org/traineeships',
+    source: 'Erasmus+',
+    isRemote: true,
+  },
+  {
+    id: 'int4',
+    title: 'Data Analyst Intern (Remote Europe)',
+    company: 'Berlin Data Labs',
+    technologies: ['Python', 'SQL', 'Tableau'],
+    location: 'Remote (Germany)',
+    category: 'Data Science',
+    description: 'Analyze complex datasets for a leading data lab in Berlin. Remote work allowed.',
+    postedAt: '2026-03-12',
+    url: 'https://de.indeed.com/jobs?q=Data+Analyst+Intern+Remote',
+    source: 'Indeed',
+    isRemote: true,
+  },
   {
     id: 'm1',
     title: 'Estágio em Desenvolvimento Web',
@@ -34,6 +88,7 @@ export const MOCK_JOBS: Job[] = [
     postedAt: '2026-03-12',
     url: 'https://manaustechhub.com/',
     source: 'Startup',
+    contactEmail: 'talentos@manaustechhub.com',
   },
   {
     id: 'm2',
@@ -47,6 +102,47 @@ export const MOCK_JOBS: Job[] = [
     url: 'https://web.ciee.org.br/estudante/processos-seletivos-lista',
     source: 'CIEE',
     code: '05128934',
+  },
+  {
+    id: 'r1',
+    title: 'Estágio Backend Node.js (Remoto)',
+    company: 'CloudScale Brasil',
+    technologies: ['Node.js', 'TypeScript', 'AWS'],
+    location: 'Remoto',
+    category: 'Backend',
+    description: 'Trabalhe de qualquer lugar do Brasil em uma startup focada em escalabilidade cloud.',
+    postedAt: '2026-03-12',
+    url: 'https://www.linkedin.com/jobs/search/?keywords=CloudScale+Brasil+Backend',
+    source: 'Startup',
+    isRemote: true,
+    contactEmail: 'jobs@cloudscale.com.br',
+  },
+  {
+    id: 'r2',
+    title: 'Estágio Frontend React (Remoto)',
+    company: 'Digital Ocean Partners',
+    technologies: ['React', 'Tailwind CSS', 'Figma'],
+    location: 'Remoto',
+    category: 'Frontend',
+    description: 'Vaga 100% remota para estudantes de todo o Brasil. Foco em interfaces modernas.',
+    postedAt: '2026-03-11',
+    url: 'https://www.linkedin.com/jobs/search/?keywords=Digital+Ocean+Partners+Frontend',
+    source: 'Direct',
+    isRemote: true,
+    contactEmail: 'rh@digitaloceanpartners.io',
+  },
+  {
+    id: 'sp1',
+    title: 'Estágio em QA / Testes',
+    company: 'TechJunction SP',
+    technologies: ['Selenium', 'Cypress', 'JavaScript'],
+    location: 'São Paulo, SP',
+    category: 'QA',
+    description: 'Oportunidade presencial em São Paulo para atuar com automação de testes.',
+    postedAt: '2026-03-12',
+    url: 'https://www.linkedin.com/jobs/search/?keywords=TechJunction+SP+QA',
+    source: 'Direct',
+    contactEmail: 'vagas@techjunction.com.br',
   },
   {
     id: 'm3',
@@ -97,6 +193,19 @@ export const MOCK_JOBS: Job[] = [
     url: 'https://manaus.am.gov.br/',
     source: 'CIEE',
     code: 'MUN-2026-088',
+  },
+  {
+    id: 'rj1',
+    title: 'Estágio em Mobile (iOS/Android)',
+    company: 'Carioca Tech',
+    technologies: ['Swift', 'Kotlin', 'Flutter'],
+    location: 'Rio de Janeiro, RJ',
+    category: 'Mobile',
+    description: 'Vaga presencial no Rio de Janeiro para desenvolvimento de aplicativos nativos e híbridos.',
+    postedAt: '2026-03-10',
+    url: 'https://www.linkedin.com/jobs/search/?keywords=Carioca+Tech+Mobile',
+    source: 'Startup',
+    contactEmail: 'recrutamento@cariocatech.com.br',
   },
   {
     id: 'p3',
@@ -160,6 +269,33 @@ export const MOCK_JOBS: Job[] = [
     code: 'FED-TRE-2026',
   },
   {
+    id: 'r3',
+    title: 'Estágio em Data Science (Remoto)',
+    company: 'DataViz Brasil',
+    technologies: ['Python', 'Pandas', 'Tableau'],
+    location: 'Remoto',
+    category: 'Data Science',
+    description: 'Vaga remota para estudantes de estatística ou computação. Foco em visualização de dados.',
+    postedAt: '2026-03-12',
+    url: 'https://www.linkedin.com/jobs/search/?keywords=DataViz+Brasil+Data+Science',
+    source: 'Startup',
+    isRemote: true,
+    contactEmail: 'career@dataviz.com.br',
+  },
+  {
+    id: 'bh1',
+    title: 'Estagiário de DevOps',
+    company: 'Mineiro Tech',
+    technologies: ['Docker', 'Kubernetes', 'CI/CD'],
+    location: 'Belo Horizonte, MG',
+    category: 'DevOps',
+    description: 'Oportunidade presencial em BH para atuar com automação de infraestrutura.',
+    postedAt: '2026-03-11',
+    url: 'https://www.linkedin.com/jobs/search/?keywords=Mineiro+Tech+DevOps',
+    source: 'Direct',
+    contactEmail: 'rh@mineirotech.com.br',
+  },
+  {
     id: 'p8',
     title: 'Estágio em Desenvolvimento (SEMIT)',
     company: 'Secretaria Municipal de Inovação e Tecnologia',
@@ -170,6 +306,7 @@ export const MOCK_JOBS: Job[] = [
     postedAt: '2026-03-12',
     url: 'https://semit.manaus.am.gov.br/',
     source: 'Direct',
+    contactEmail: 'estagio@semit.manaus.am.gov.br',
   },
 ];
 
@@ -227,5 +364,23 @@ export const MOCK_NEWS: News[] = [
     publishedAt: '2026-03-08',
     category: 'Brasil',
     summary: 'Mudanças visam garantir melhor formação técnica e benefícios para os estudantes.',
+  },
+  {
+    id: 'n7',
+    title: 'Top 10 Platforms for International Remote Internships in 2026',
+    source: 'TechCrunch',
+    url: 'https://techcrunch.com/',
+    publishedAt: '2026-03-12',
+    category: 'International',
+    summary: 'Discover the best websites to find remote internships in the USA, Europe, and Asia.',
+  },
+  {
+    id: 'n8',
+    title: 'Erasmus+ Program Expands Remote Traineeship Opportunities',
+    source: 'European Commission',
+    url: 'https://ec.europa.eu/programmes/erasmus-plus/',
+    publishedAt: '2026-03-11',
+    category: 'International',
+    summary: 'New funding available for students seeking digital internships across European borders.',
   },
 ];
