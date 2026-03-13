@@ -12,6 +12,16 @@ export interface Job {
   code?: string;
 }
 
+export interface News {
+  id: string;
+  title: string;
+  source: string;
+  url: string;
+  publishedAt: string;
+  category: 'Manaus' | 'Brasil';
+  summary: string;
+}
+
 export const MOCK_JOBS: Job[] = [
   {
     id: 'm1',
@@ -160,5 +170,62 @@ export const MOCK_JOBS: Job[] = [
     postedAt: '2026-03-12',
     url: 'https://semit.manaus.am.gov.br/',
     source: 'Direct',
+  },
+];
+
+export const MOCK_NEWS: News[] = [
+  {
+    id: 'n1',
+    title: 'Manaus Tech Hub anuncia nova rodada de aceleração para startups locais',
+    source: 'A Crítica',
+    url: 'https://www.acritica.com/manaus',
+    publishedAt: '2026-03-12',
+    category: 'Manaus',
+    summary: 'Aceleradora do Sidia busca novos talentos e soluções inovadoras na região norte.',
+  },
+  {
+    id: 'n2',
+    title: 'Polo Industrial de Manaus registra alta na demanda por profissionais de TI',
+    source: 'G1 Amazonas',
+    url: 'https://g1.globo.com/am/amazonas/',
+    publishedAt: '2026-03-10',
+    category: 'Manaus',
+    summary: 'Indústrias do Distrito Industrial buscam estagiários e desenvolvedores para digitalização.',
+  },
+  {
+    id: 'n3',
+    title: 'Mercado de tecnologia no Brasil deve crescer 12% em 2026, aponta relatório',
+    source: 'Canaltech',
+    url: 'https://canaltech.com.br/mercado/',
+    publishedAt: '2026-03-11',
+    category: 'Brasil',
+    summary: 'Setor de software e serviços continua sendo o principal motor da economia digital.',
+  },
+  {
+    id: 'n4',
+    title: 'CIEE e IEL abrem mais de 500 vagas de estágio em tecnologia nesta semana',
+    source: 'Exame',
+    url: 'https://exame.com/carreira/',
+    publishedAt: '2026-03-12',
+    category: 'Brasil',
+    summary: 'Oportunidades estão espalhadas por todo o país, com foco em trabalho híbrido e remoto.',
+  },
+  {
+    id: 'n5',
+    title: 'Startup amazonense recebe aporte milionário para expansão nacional',
+    source: 'Portal Holanda',
+    url: 'https://www.portalholanda.com.br/tecnologia/',
+    publishedAt: '2026-03-09',
+    category: 'Manaus',
+    summary: 'Empresa focada em logística na Amazônia atrai investidores do sudeste.',
+  },
+  {
+    id: 'n6',
+    title: 'Novas regras para estágio em TI entram em vigor no Brasil',
+    source: 'Valor Econômico',
+    url: 'https://valor.globo.com/carreira/',
+    publishedAt: '2026-03-08',
+    category: 'Brasil',
+    summary: 'Mudanças visam garantir melhor formação técnica e benefícios para os estudantes.',
   },
 ];
